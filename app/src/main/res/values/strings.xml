@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">ConversorTemperatura</string>
+    <string name="fahrenheit">Fahrenheit</string>
+    <string name="celsius">Celsius</string>
+    <string name="converter">Converter</string>
+    <string name="refazer">Refazer</string>
+    <string name="valores_invalidos">Valor não encontrado!</string>
 </resources>

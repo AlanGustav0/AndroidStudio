@@ -6,13 +6,117 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <View
+        android:id="@+id/view_background"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:background="#fff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="@color/colorAccent"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/image_celsius"
+        android:layout_width="150dp"
+        android:layout_height="30dp"
+        android:layout_margin="5dp"
+        android:src="@drawable/ic_celsius_farenheit"
+        android:tint="#fff"
+        app:layout_constraintBottom_toBottomOf="@id/view"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintLeft_toLeftOf="@id/view"
+        app:layout_constraintRight_toLeftOf="@id/image_fahrenheit"
+        app:layout_constraintTop_toTopOf="@id/view" />
+
+
+    <ImageView
+        android:id="@+id/image_fahrenheit"
+        android:layout_width="150dp"
+        android:layout_height="30dp"
+        android:layout_margin="5dp"
+        android:src="@drawable/ic_farenheit_celsius"
+        android:tint="#fff"
+        app:layout_constraintBottom_toBottomOf="@id/view"
+        app:layout_constraintLeft_toRightOf="@id/image_celsius"
+        app:layout_constraintRight_toRightOf="@id/view"
+        app:layout_constraintTop_toTopOf="@id/view" />
+
+
+    <TextView
+        android:id="@+id/text_celsius"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:layout_marginEnd="15dp"
+        android:text="@string/celsius"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintLeft_toLeftOf="@id/text_fahrenheit"
+        app:layout_constraintTop_toBottomOf="@id/view" />
+
+    <EditText
+        android:id="@+id/edit_celsius"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:inputType="numberSigned"
+        app:layout_constraintBottom_toBottomOf="@id/text_celsius"
+        app:layout_constraintRight_toRightOf="@id/temperature"
+        app:layout_constraintTop_toTopOf="@id/text_celsius" />
+
+    <TextView
+        android:id="@+id/text_fahrenheit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="15dp"
+        android:text="@string/fahrenheit"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/temperature"
+        app:layout_constraintTop_toBottomOf="@id/text_celsius" />
+
+    <TextView
+        android:id="@+id/temperature"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="0º"
+        android:textSize="30dp"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="@id/text_fahrenheit"
+        app:layout_constraintLeft_toRightOf="@id/text_fahrenheit"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/text_fahrenheit" />
+
+    <Button
+        android:id="@+id/button_calcular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:background="@color/colorPrimaryDark"
+        android:padding="15dp"
+        android:text="@string/converter"
+        android:textColor="#fff"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/temperature" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
