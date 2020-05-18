@@ -3,13 +3,18 @@ package com.alangustavo.conversortemperatura
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.EditText
 import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.math.absoluteValue
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
-    //Instanciando a variável à classe ConvertConstrant
-    private var mTemperature = ConvertConstants.IMAGEFILTER.CELSIUS
+    private lateinit var mViewModel: MainViewModel
+
+
     var valueColor: Float =
         0f // Variável utilizada na condição que verifica qual cor será utilizada na barra superior
 
@@ -17,10 +22,51 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        image_celsius.setColorFilter(resources.getColor(R.color.snow)) // Cor padrão de início da imagem Celsius -: Fahrenheit
-        image_celsius.setOnClickListener(this) // evento de clique para a imagem
-        image_fahrenheit.setOnClickListener(this) //evento de clique para a imagem
-        button_calcular.setOnClickListener(this) //evento de clique o botão
+        mViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
+        setListeners()
+
+        mViewModel.edit.observe(this, Observer {
+            var edit = edit_celsius.text.toString()
+
+            if (it && temperature.text.toString() == "0º") {
+                mViewModel.calculate(edit)
+
+            } else if (it && temperature.text.toString() != "0º") {
+                edit_celsius.setText("")
+                mViewModel.clear()
+            } else {
+                Toast.makeText(
+                    applicationContext,
+                    getString(R.string.valores_invalidos),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+
+
+        //Variáveis observadas pela ViewModel
+        mViewModel.temperature.observe(this, Observer {
+            temperature.text = it
+        })
+
+        mViewModel.button.observe(this, Observer {
+            button_calcular.text = it
+        })
+
+        mViewModel.celsius.observe(this, Observer {
+            text_celsius.text = it
+        })
+        mViewModel.fahrenheit.observe(this, Observer {
+            text_fahrenheit.text = it
+        })
+
+
+        //Evento de click do botão cácular
+        button_calcular.setOnClickListener {
+            var edit = edit_celsius.text.toString()
+            mViewModel.validationOk(edit)
+        }
 
 
         //Deixando a supportActionBar em moddo invisível "hide"
@@ -40,143 +86,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         )
 
         //Condição que verifica qual o botão acionado e qual será sua ação
-        if (id == R.id.button_calcular) {
-            calculate()
-        } else if (id == R.id.button_calcular && temperature.text.toString() != "0º") {
-            clear()
-        } else if (id in listFilter) {
-            handlerFilter(id)
+        if (id in listFilter) {
+            mViewModel.handlerFilter(id)
         }
 
     }
 
-    //Método que valida se o campo editText está diferente de vazio
-    fun validationOk(): Boolean {
-        return edit_celsius.text.toString() != ""
-    }
 
-    //Método que apaga as informações dos campos
-    private fun clear() {
-        edit_celsius.setText("")
-        temperature.setText("0º")
-        button_calcular.setText("Converter")
-    }
-
-    //Método que verifica qual botão foi acionado e qual cenário será mostrado
-    private fun handlerFilter(id: Int) {
-
-        when (id) {
-
-            R.id.image_fahrenheit -> {
-                image_celsius.setColorFilter(resources.getColor(R.color.white))
-                image_fahrenheit.setColorFilter(resources.getColor(R.color.snow))
-                text_celsius.setText("Fahrenheit")
-                text_fahrenheit.setText("Celsius")
-                mTemperature = ConvertConstants.IMAGEFILTER.FAHRENHEIT
-                colors(valueColor)
-
-
-            }
-            R.id.image_celsius -> {
-                image_celsius.setColorFilter(resources.getColor(R.color.snow))
-                image_fahrenheit.setColorFilter(resources.getColor(R.color.white))
-                text_celsius.setText("Celsius")
-                text_fahrenheit.setText("Fahrenheit")
-                mTemperature = ConvertConstants.IMAGEFILTER.CELSIUS
-                colors(valueColor)
-
-            }
-
-        }
-    }
-
-    //Método responsável por fazer os cálculos de conversão
-    fun calculate() {
-        //Caso a validação esteja "OK", a variável mTemperature tenha recebido o valor "1" e o campo temperatura seja igual a "0"
-        if (validationOk() && mTemperature == 1 && temperature.text.toString() == "0º") {
-
-            // Convertendo Celsius para Fahrenheit
-            temperature.text =
-                Math.round(((9 * edit_celsius.text.toString().toFloat() + 160) / 5)).toString()
-
-            button_calcular.setText("Reafazer")// Atribuindo texto "Refazer" ao botão
-            valueColor = temperature.text.toString()
-                .toFloat() //Variável valueColor recebe o valor do campo temperatura
-            colors(valueColor) //Chamada de método com passagem de parâmetro
-
-            //Ao clicar no botão "Refazer" ele volta ao modo de início, um "default"
-        } else if (mTemperature == 1 && temperature.text.toString() != "0º") {
-            defalut()
-
-
-            //Caso a validação esteja "OK", a variável mTemperature tenha recebido o valor "2" e o campo temperatura seja igual a "0"
-        } else if (validationOk() && mTemperature == 2 && temperature.text.toString() == "0º") {
-
-            // Convertendo Fahrenheit para Celsius
-            temperature.text =
-                Math.round(((edit_celsius.text.toString().toFloat() - 32) / 1.8)).toString()
-            // Convertendo Fahrenheit para Celsius
-
-            button_calcular.setText("Reafazer")// Atribuindo texto "Refazer" ao botão
-            valueColor = temperature.text.toString()
-                .toFloat() //Variável valueColor recebe o valor do campo temperatura
-            colors(valueColor) //Chamada de método com passagem de parâmetro
-
-            //Ao clicar no botão "Refazer" ele volta ao modo de início, um "default"
-        } else if (mTemperature == 2 && temperature.text.toString() != "0º") {
-            defalut()
-
-
-            //Caso nehuma das condições seja atendida, ele retorna a mensagem de "Valor não encontrado"
-        } else {
-            Toast.makeText(
-                applicationContext,
-                getString(R.string.valores_invalidos),
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-    }
-
-    fun defalut() {
-
-        button_calcular.setText("Converter")
-        temperature.setText("0º")
-        edit_celsius.setText("")
-
-        view.setBackgroundColor(resources.getColor(R.color.colorAccent))
-        image_celsius.setColorFilter(resources.getColor(R.color.snow))
-        image_fahrenheit.setColorFilter(resources.getColor(R.color.white))
-        valueColor = 0f
-
-    }
-
-    fun colors(valueColor: Float) {
-
-        if (valueColor <= 15) {
-            view.setBackgroundColor(resources.getColor(R.color.colorAccent))
-            if (mTemperature == 1) {
-                image_celsius.setColorFilter(resources.getColor(R.color.snow))
-            } else {
-                image_fahrenheit.setColorFilter(resources.getColor(R.color.snow))
-            }
-
-        } else if (valueColor > 15 && valueColor <= 28) {
-            view.setBackgroundColor(resources.getColor(R.color.warm))
-            if (mTemperature == 1) {
-                image_celsius.setColorFilter(resources.getColor(R.color.warmLight))
-            } else {
-                image_fahrenheit.setColorFilter(resources.getColor(R.color.warmLight))
-                image_celsius.setColorFilter(resources.getColor(R.color.white))
-            }
-        } else if (valueColor >= 29) {
-            view.setBackgroundColor(resources.getColor(R.color.hot))
-            if (mTemperature == 1) {
-                image_celsius.setColorFilter(resources.getColor(R.color.hotLight))
-            } else {
-                image_fahrenheit.setColorFilter(resources.getColor(R.color.hotLight))
-                image_celsius.setColorFilter(resources.getColor(R.color.white))
-            }
-
-        }
+    // evento de clique para as imagens
+    fun setListeners() {
+        image_celsius.setOnClickListener(this)
+        image_fahrenheit.setOnClickListener(this)
     }
 }
