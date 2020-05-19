@@ -1,9 +1,6 @@
 package com.alangustavo.conversortemperatura
 
 
-import android.graphics.Color
-import android.graphics.ColorFilter
-import android.media.Image
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
@@ -21,8 +18,6 @@ class MainViewModel : ViewModel() {
 
     private var mRepository = Repository()
 
-    var valueColor: Float = 0f
-
     private var mTemp = MutableLiveData<String>()
     var temperature = mTemp
 
@@ -32,20 +27,20 @@ class MainViewModel : ViewModel() {
     private var textFahrenheit = MutableLiveData<String>()
     var fahrenheit = textFahrenheit
 
+    /*
     private var mImageCelsius = MutableLiveData<Int>()
     var imageCelsius = mImageCelsius
 
     private var mImageFahrenheit = MutableLiveData<Int>()
     var imageFahrenheit = mImageCelsius
 
+     */
+
     init {
         temperature.value = "0º"
         button.value = "Converter"
-        imageCelsius.value = R.color.colorPrimaryDark
-
 
     }
-
 
     //Método responsável por fazer os cálculos de conversão
     fun calculate(edit: String) {
@@ -53,7 +48,7 @@ class MainViewModel : ViewModel() {
         if (mTemperature == 1 && temperature.value == "0º") {
 
             // Convertendo Celsius para Fahrenheit
-            temperature.value = Math.round(((9 * edit.toFloat() + 160) / 5)).toString()
+            temperature.value = Math.round(((9 * edit.toFloat() + 160) / 5)).toString() + "º"
 
             button.value = "Refazer"// Atribuindo texto "Refazer" ao botão
 
@@ -61,7 +56,7 @@ class MainViewModel : ViewModel() {
         else if (mTemperature == 2 && temperature.value == "0º") {
 
             // Convertendo Fahrenheit para Celsius
-            temperature.value = Math.round(((edit.toFloat() - 32) / 1.8)).toString()
+            temperature.value = Math.round(((edit.toFloat() - 32) / 1.8)).toString() + "º"
             // Convertendo Fahrenheit para Celsius
 
             button.value = "Refazer"// Atribuindo texto "Refazer" ao botão
@@ -85,8 +80,8 @@ class MainViewModel : ViewModel() {
     fun handlerFilter(id: Int) {
 
         if (id == R.id.image_fahrenheit) {
-            imageCelsius.value = R.color.colorPrimaryDark
-            imageFahrenheit.value = R.color.snow
+           // imageCelsius.value = R.color.white
+           // imageFahrenheit.value = R.color.snow
             celsius.value = "Fahrenheit"
             fahrenheit.value = "Celsius"
             mTemperature = ConvertConstants.IMAGEFILTER.FAHRENHEIT
@@ -94,8 +89,8 @@ class MainViewModel : ViewModel() {
 
 
         } else {
-            imageCelsius.value = R.color.snow
-            imageFahrenheit.value = R.color.white
+            //imageCelsius.value = R.color.snow
+           // imageFahrenheit.value = R.color.white
             celsius.value = "Celsius"
             fahrenheit.value = "Fahrenheit"
             mTemperature = ConvertConstants.IMAGEFILTER.CELSIUS

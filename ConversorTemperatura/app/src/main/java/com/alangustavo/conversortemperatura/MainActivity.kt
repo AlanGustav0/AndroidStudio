@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlin.math.absoluteValue
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
@@ -62,6 +63,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         })
 
 
+
         //Evento de click do botão cácular
         button_calcular.setOnClickListener {
             var edit = edit_celsius.text.toString()
@@ -91,7 +93,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
 
     }
-
 
     // evento de clique para as imagens
     fun setListeners() {
