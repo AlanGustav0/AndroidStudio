@@ -27,18 +27,18 @@ class MainViewModel : ViewModel() {
     private var textFahrenheit = MutableLiveData<String>()
     var fahrenheit = textFahrenheit
 
-    /*
+
     private var mImageCelsius = MutableLiveData<Int>()
     var imageCelsius = mImageCelsius
 
     private var mImageFahrenheit = MutableLiveData<Int>()
     var imageFahrenheit = mImageCelsius
 
-     */
 
     init {
         temperature.value = "0º"
         button.value = "Converter"
+
 
     }
 

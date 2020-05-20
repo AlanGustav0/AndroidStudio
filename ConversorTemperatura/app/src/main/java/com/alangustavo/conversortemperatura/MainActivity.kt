@@ -62,6 +62,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             text_fahrenheit.text = it
         })
 
+        mViewModel.imageCelsius.observe(this, Observer {
+
+        })
+
+
+
 
 
         //Evento de click do botão cácular
