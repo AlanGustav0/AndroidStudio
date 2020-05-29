@@ -1,11 +1,13 @@
 package com.alangustavo.conversortemperatura
 
-
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 
 
-class MainViewModel : ViewModel() {
+class MainViewModel(application: Application) : AndroidViewModel(application) {
+
+    private val mMain = application.applicationContext
 
     //Instanciando a variável à classe ConvertConstrant
     private var mTemperature = ConvertConstants.IMAGEFILTER.CELSIUS
@@ -32,14 +34,12 @@ class MainViewModel : ViewModel() {
     var imageCelsius = mImageCelsius
 
     private var mImageFahrenheit = MutableLiveData<Int>()
-    var imageFahrenheit = mImageCelsius
+    var imageFahrenheit = mImageFahrenheit
 
 
     init {
         temperature.value = "0º"
         button.value = "Converter"
-
-
     }
 
     //Método responsável por fazer os cálculos de conversão
@@ -77,26 +77,29 @@ class MainViewModel : ViewModel() {
     }
 
     //Método que verifica qual botão foi acionado e qual cenário será mostrado
-    fun handlerFilter(id: Int) {
+
+    fun handlerFilter(id: Int):Boolean {
 
         if (id == R.id.image_fahrenheit) {
-           // imageCelsius.value = R.color.white
-           // imageFahrenheit.value = R.color.snow
+
+            imageCelsius.value = mMain.resources.getColor(R.color.white)
+            imageFahrenheit.value = mMain.resources.getColor(R.color.snow)
             celsius.value = "Fahrenheit"
             fahrenheit.value = "Celsius"
             mTemperature = ConvertConstants.IMAGEFILTER.FAHRENHEIT
-            //colors(valueColor)
+            return true
 
 
         } else {
-            //imageCelsius.value = R.color.snow
-           // imageFahrenheit.value = R.color.white
+            imageCelsius.value = mMain.resources.getColor(R.color.snow)
+            imageFahrenheit.value = mMain.resources.getColor(R.color.white)
             celsius.value = "Celsius"
             fahrenheit.value = "Fahrenheit"
             mTemperature = ConvertConstants.IMAGEFILTER.CELSIUS
-            //colors(valueColor)
+            return true
 
         }
 
     }
 }
+

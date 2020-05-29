@@ -3,13 +3,10 @@ package com.alangustavo.conversortemperatura
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
-import kotlin.math.absoluteValue
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -25,10 +22,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         mViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
+        //Default cor da imagem
+        image_celsius.setColorFilter(resources.getColor(R.color.snow))
+
         setListeners()
 
         mViewModel.edit.observe(this, Observer {
-            var edit = edit_celsius.text.toString()
+            val edit = edit_celsius.text.toString()
 
             if (it && temperature.text.toString() == "0º") {
                 mViewModel.calculate(edit)
@@ -45,34 +45,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
         })
 
-
-        //Variáveis observadas pela ViewModel
-        mViewModel.temperature.observe(this, Observer {
-            temperature.text = it
-        })
-
-        mViewModel.button.observe(this, Observer {
-            button_calcular.text = it
-        })
-
-        mViewModel.celsius.observe(this, Observer {
-            text_celsius.text = it
-        })
-        mViewModel.fahrenheit.observe(this, Observer {
-            text_fahrenheit.text = it
-        })
-
-        mViewModel.imageCelsius.observe(this, Observer {
-
-        })
-
-
-
+        //Método das variáveis observadas pelo ViewModel
+        observer()
 
 
         //Evento de click do botão cácular
         button_calcular.setOnClickListener {
-            var edit = edit_celsius.text.toString()
+            val edit = edit_celsius.text.toString()
             mViewModel.validationOk(edit)
         }
 
@@ -104,5 +83,31 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     fun setListeners() {
         image_celsius.setOnClickListener(this)
         image_fahrenheit.setOnClickListener(this)
+    }
+
+    fun observer(){
+        //Variáveis observadas pela ViewModel
+        mViewModel.temperature.observe(this, Observer {
+            temperature.text = it
+        })
+
+        mViewModel.button.observe(this, Observer {
+            button_calcular.text = it
+        })
+
+        mViewModel.celsius.observe(this, Observer {
+            text_celsius.text = it
+        })
+        mViewModel.fahrenheit.observe(this, Observer {
+            text_fahrenheit.text = it
+        })
+
+        mViewModel.imageCelsius.observe(this, Observer {
+            image_celsius.setColorFilter(it)
+        })
+
+        mViewModel.imageFahrenheit.observe(this, Observer {
+            image_fahrenheit.setColorFilter(it)
+        })
     }
 }
