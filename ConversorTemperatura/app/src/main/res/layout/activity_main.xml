@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
-        android:id="@+id/view"
+        android:id="@+id/view_header"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:background="@color/colorAccent"
@@ -34,11 +34,11 @@
         android:layout_margin="5dp"
         android:src="@drawable/ic_celsius_farenheit"
         android:tint="#fff"
-        app:layout_constraintBottom_toBottomOf="@id/view"
+        app:layout_constraintBottom_toBottomOf="@id/view_header"
         app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintLeft_toLeftOf="@id/view"
+        app:layout_constraintLeft_toLeftOf="@id/view_header"
         app:layout_constraintRight_toLeftOf="@id/image_fahrenheit"
-        app:layout_constraintTop_toTopOf="@id/view" />
+        app:layout_constraintTop_toTopOf="@id/view_header" />
 
 
     <ImageView
@@ -48,10 +48,10 @@
         android:layout_margin="5dp"
         android:src="@drawable/ic_farenheit_celsius"
         android:tint="#fff"
-        app:layout_constraintBottom_toBottomOf="@id/view"
+        app:layout_constraintBottom_toBottomOf="@id/view_header"
         app:layout_constraintLeft_toRightOf="@id/image_celsius"
-        app:layout_constraintRight_toRightOf="@id/view"
-        app:layout_constraintTop_toTopOf="@id/view" />
+        app:layout_constraintRight_toRightOf="@id/view_header"
+        app:layout_constraintTop_toTopOf="@id/view_header" />
 
 
     <TextView
@@ -66,7 +66,7 @@
         android:textStyle="bold"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintLeft_toLeftOf="@id/text_fahrenheit"
-        app:layout_constraintTop_toBottomOf="@id/view" />
+        app:layout_constraintTop_toBottomOf="@id/view_header" />
 
     <EditText
         android:id="@+id/edit_celsius"

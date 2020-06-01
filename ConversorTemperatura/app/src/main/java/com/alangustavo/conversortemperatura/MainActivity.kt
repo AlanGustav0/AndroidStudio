@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_main.*
@@ -13,9 +14,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var mViewModel: MainViewModel
 
 
-    var valueColor: Float =
-        0f // Variável utilizada na condição que verifica qual cor será utilizada na barra superior
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -23,7 +21,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         mViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         //Default cor da imagem
-        image_celsius.setColorFilter(resources.getColor(R.color.snow))
+        image_celsius.setColorFilter(ContextCompat.getColor(this,R.color.snow))
 
         setListeners()
 
@@ -108,6 +106,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         mViewModel.imageFahrenheit.observe(this, Observer {
             image_fahrenheit.setColorFilter(it)
+        })
+
+        mViewModel.view.observe(this, Observer{
+            view_header.setBackgroundColor(it)
         })
     }
 }
