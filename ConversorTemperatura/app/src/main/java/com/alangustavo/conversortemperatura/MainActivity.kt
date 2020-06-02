@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         mViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         //Default cor da imagem
-        image_celsius.setColorFilter(ContextCompat.getColor(this,R.color.snow))
+        image_celsius.setColorFilter(ContextCompat.getColor(this, R.color.snow))
 
         setListeners()
 
@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         image_fahrenheit.setOnClickListener(this)
     }
 
-    fun observer(){
+    fun observer() {
         //Variáveis observadas pela ViewModel
         mViewModel.temperature.observe(this, Observer {
             temperature.text = it
@@ -108,7 +108,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             image_fahrenheit.setColorFilter(it)
         })
 
-        mViewModel.view.observe(this, Observer{
+        mViewModel.view.observe(this, Observer {
             view_header.setBackgroundColor(it)
         })
     }
