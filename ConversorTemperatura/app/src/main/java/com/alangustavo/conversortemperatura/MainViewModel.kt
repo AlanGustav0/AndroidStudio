@@ -81,8 +81,22 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     //Método que apaga as informações dos campos
     fun clear() {
-        temperature.value = "0º"
-        button.value = "Converter"
+        if(mTemperature == 1){
+            temperature.value = "0º"
+            button.value = "Converter"
+            view.value = ContextCompat.getColor(mMain,R.color.colorAccent)
+            imageCelsius.value = ContextCompat.getColor(mMain,R.color.snow)
+            imageFahrenheit.value = ContextCompat.getColor(mMain,R.color.white)
+            valueColor = 0
+        }else{
+            temperature.value = "0º"
+            button.value = "Converter"
+            view.value = ContextCompat.getColor(mMain,R.color.colorAccent)
+            imageCelsius.value = ContextCompat.getColor(mMain,R.color.white)
+            imageFahrenheit.value = ContextCompat.getColor(mMain,R.color.snow)
+            valueColor = 0
+        }
+
     }
 
     //Método que verifica qual botão foi acionado e qual cenário será mostrado
@@ -91,20 +105,20 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
         if (id == R.id.image_fahrenheit) {
 
-            imageCelsius.value = ContextCompat.getColor(mMain,R.color.white)
-            imageFahrenheit.value = ContextCompat.getColor(mMain,R.color.snow)
             celsius.value = "Fahrenheit"
             fahrenheit.value = "Celsius"
             mTemperature = ConvertConstants.IMAGEFILTER.FAHRENHEIT
+            chooseColor(valueColor)
             return true
 
+        }
 
-        } else {
-            imageCelsius.value = ContextCompat.getColor(mMain,R.color.snow)
-            imageFahrenheit.value = ContextCompat.getColor(mMain,R.color.white)
+        else {
+
             celsius.value = "Celsius"
             fahrenheit.value = "Fahrenheit"
             mTemperature = ConvertConstants.IMAGEFILTER.CELSIUS
+            chooseColor(valueColor)
             return true
 
         }
@@ -112,12 +126,35 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun chooseColor(valueColor: Int){
-        if(valueColor <=15){
-            view.value = ContextCompat.getColor(mMain,R.color.snow)
-        }else if(valueColor >= 16 || valueColor <=25){
+        if(valueColor <=15 && mTemperature == 1){
+            view.value = ContextCompat.getColor(mMain,R.color.colorAccent)
+            imageCelsius.value = ContextCompat.getColor(mMain,R.color.snow)
+            imageFahrenheit.value = ContextCompat.getColor(mMain,R.color.white)
+
+        }else if(valueColor >= 16 && valueColor <=25 && mTemperature == 1){
             view.value = ContextCompat.getColor(mMain,R.color.warm)
-        }else if(valueColor > 25){
+            imageCelsius.value = ContextCompat.getColor(mMain,R.color.warmLight)
+            imageFahrenheit.value = ContextCompat.getColor(mMain,R.color.white)
+
+        }else if(valueColor > 25 && mTemperature == 1){
+            imageCelsius.value = ContextCompat.getColor(mMain,R.color.hotLight)
             view.value = ContextCompat.getColor(mMain,R.color.hot)
+            imageFahrenheit.value = ContextCompat.getColor(mMain,R.color.white)
+
+        }else if(valueColor <= 15 && mTemperature == 2){
+            view.value = ContextCompat.getColor(mMain,R.color.colorAccent)
+            imageCelsius.value = ContextCompat.getColor(mMain,R.color.white)
+            imageFahrenheit.value = ContextCompat.getColor(mMain,R.color.snow)
+
+        }else if(valueColor >= 16 && valueColor <=25 && mTemperature == 2) {
+            view.value = ContextCompat.getColor(mMain, R.color.warm)
+            imageCelsius.value = ContextCompat.getColor(mMain, R.color.white)
+            imageFahrenheit.value = ContextCompat.getColor(mMain, R.color.warmLight)
+
+        }else if(valueColor > 25 && mTemperature == 2) {
+            imageCelsius.value = ContextCompat.getColor(mMain, R.color.white)
+            view.value = ContextCompat.getColor(mMain, R.color.hot)
+            imageFahrenheit.value = ContextCompat.getColor(mMain, R.color.hotLight)
         }
     }
 }
