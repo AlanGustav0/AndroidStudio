@@ -1,10 +1,10 @@
 package com.alangustavo.conversortemperatura
 
 import android.app.Application
+import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -39,14 +39,16 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private var mImageFahrenheit = MutableLiveData<Int>()
     var imageFahrenheit = mImageFahrenheit
 
-    private var mView = MutableLiveData<Int>()
+    private var mView = MutableLiveData<Drawable>()
     var view = mView
+
+
 
 
     init {
         temperature.value = "0º"
         button.value = "Converter"
-        view.value = ContextCompat.getColor(mMain, R.color.colorAccent)
+        view.value = ContextCompat.getDrawable(mMain, R.drawable.shape_background)
     }
 
     //Método responsável por fazer os cálculos de conversão
@@ -85,14 +87,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         if (mTemperature == 1) {
             temperature.value = "0º"
             button.value = "Converter"
-            view.value = ContextCompat.getColor(mMain, R.color.colorAccent)
+            view.value = ContextCompat.getDrawable(mMain, R.drawable.shape_background)
             imageCelsius.value = ContextCompat.getColor(mMain, R.color.snow)
             imageFahrenheit.value = ContextCompat.getColor(mMain, R.color.white)
             valueColor = 0
         } else {
             temperature.value = "0º"
             button.value = "Converter"
-            view.value = ContextCompat.getColor(mMain, R.color.colorAccent)
+            view.value = ContextCompat.getDrawable(mMain, R.drawable.shape_background)
             imageCelsius.value = ContextCompat.getColor(mMain, R.color.white)
             imageFahrenheit.value = ContextCompat.getColor(mMain, R.color.snow)
             valueColor = 0
@@ -126,35 +128,53 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun chooseColor(valueColor: Int) {
         if (valueColor <= 15 && mTemperature == 1) {
-            view.value = ContextCompat.getColor(mMain, R.color.colorAccent)
+
+            view.value = ContextCompat.getDrawable(mMain, R.drawable.shape_background)
             imageCelsius.value = ContextCompat.getColor(mMain, R.color.snow)
             imageFahrenheit.value = ContextCompat.getColor(mMain, R.color.white)
 
         } else if (valueColor >= 16 && valueColor <= 25 && mTemperature == 1) {
-            view.value = ContextCompat.getColor(mMain, R.color.warm)
+
+            view.value = ContextCompat.getDrawable(mMain, R.drawable.shape_background_orange)
             imageCelsius.value = ContextCompat.getColor(mMain, R.color.warmLight)
             imageFahrenheit.value = ContextCompat.getColor(mMain, R.color.white)
 
         } else if (valueColor > 25 && mTemperature == 1) {
+
             imageCelsius.value = ContextCompat.getColor(mMain, R.color.hotLight)
-            view.value = ContextCompat.getColor(mMain, R.color.hot)
+            view.value = ContextCompat.getDrawable(mMain, R.drawable.shape_background_red)
             imageFahrenheit.value = ContextCompat.getColor(mMain, R.color.white)
 
         } else if (valueColor <= 15 && mTemperature == 2) {
-            view.value = ContextCompat.getColor(mMain, R.color.colorAccent)
+
+            view.value = ContextCompat.getDrawable(mMain, R.drawable.shape_background)
             imageCelsius.value = ContextCompat.getColor(mMain, R.color.white)
             imageFahrenheit.value = ContextCompat.getColor(mMain, R.color.snow)
 
         } else if (valueColor >= 16 && valueColor <= 25 && mTemperature == 2) {
-            view.value = ContextCompat.getColor(mMain, R.color.warm)
+
+            view.value = ContextCompat.getDrawable(mMain, R.drawable.shape_background_orange)
             imageCelsius.value = ContextCompat.getColor(mMain, R.color.white)
             imageFahrenheit.value = ContextCompat.getColor(mMain, R.color.warmLight)
 
         } else if (valueColor > 25 && mTemperature == 2) {
+
             imageCelsius.value = ContextCompat.getColor(mMain, R.color.white)
-            view.value = ContextCompat.getColor(mMain, R.color.hot)
+            view.value = ContextCompat.getDrawable(mMain, R.drawable.shape_background_red)
             imageFahrenheit.value = ContextCompat.getColor(mMain, R.color.hotLight)
         }
     }
+
+    /*
+    fun fade(view: View){
+        val animation = AlphaAnimation(0f,1f)
+        animation.duration = 2000L
+        animation.repeatMode = Animation.REVERSE
+        animation.repeatCount = 0
+        view.startAnimation(animation)
+
+    }
+
+     */
 }
 

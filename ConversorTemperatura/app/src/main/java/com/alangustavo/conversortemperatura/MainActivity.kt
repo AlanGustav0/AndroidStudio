@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_main.*
@@ -19,9 +18,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_main)
 
         mViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
-        //Default cor da imagem
-        image_celsius.setColorFilter(ContextCompat.getColor(this, R.color.snow))
 
         setListeners()
 
@@ -109,7 +105,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         })
 
         mViewModel.view.observe(this, Observer {
-            view_header.setBackgroundColor(it)
+            view_header.setBackground(it)
         })
+
     }
+
+
 }
