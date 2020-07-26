@@ -1,4 +1,4 @@
-package com.alangustavo.conversortemperatura
+package com.alangustavo.conversortemperatura.repository
 
 class Repository {
     fun edit (edit: String) = (edit != "")

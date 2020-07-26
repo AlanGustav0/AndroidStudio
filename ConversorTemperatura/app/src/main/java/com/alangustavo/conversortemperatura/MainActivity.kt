@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.alangustavo.conversortemperatura.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
@@ -105,7 +106,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         })
 
         mViewModel.view.observe(this, Observer {
-            view_header.setBackground(it)
+            view_header.setBackgroundColor(it)
         })
 
     }
