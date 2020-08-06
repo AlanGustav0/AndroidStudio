@@ -20,29 +20,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         mViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
+        //Método que faz a chamada dos eventos de click das imagens
         setListeners()
 
-        mViewModel.edit.observe(this, Observer {
-            val edit = edit_celsius.text.toString()
-
-            if (it && temperature.text.toString() == "0º") {
-                mViewModel.calculate(edit)
-
-            } else if (it && temperature.text.toString() != "0º") {
-                edit_celsius.setText("")
-                mViewModel.clear()
-            } else {
-                Toast.makeText(
-                    applicationContext,
-                    getString(R.string.valores_invalidos),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        })
-
-        //Método das variáveis observadas pelo ViewModel
+        //Método das variáveis observadas pela MainViewModel
         observer()
-
 
         //Evento de click do botão cácular
         button_calcular.setOnClickListener {
@@ -74,14 +56,32 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    // evento de clique para as imagens
+    // Evento de clique para as imagens
     fun setListeners() {
         image_celsius.setOnClickListener(this)
         image_fahrenheit.setOnClickListener(this)
     }
 
+    //Método observer, faz a chamada de todos os eventos observados pela MainViewModel
     fun observer() {
-        //Variáveis observadas pela ViewModel
+        mViewModel.edit.observe(this, Observer {
+            val edit = edit_celsius.text.toString()
+
+            if (it && temperature.text.toString() == "0º") {
+                mViewModel.calculate(edit)
+
+            } else if (it && temperature.text.toString() != "0º") {
+                edit_celsius.setText("")
+                mViewModel.clear()
+            } else {
+                Toast.makeText(
+                    applicationContext,
+                    getString(R.string.valores_invalidos),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+
         mViewModel.temperature.observe(this, Observer {
             temperature.text = it
         })
@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         mViewModel.celsius.observe(this, Observer {
             text_celsius.text = it
         })
-        mViewModel.fahrenheit.observe(this, Observer {
+        mViewModel.textFahrenheit.observe(this, Observer {
             text_fahrenheit.text = it
         })
 

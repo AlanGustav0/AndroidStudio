@@ -1,12 +1,7 @@
 package com.alangustavo.conversortemperatura.viewmodels
 
 import android.app.Application
-import android.graphics.drawable.Drawable
-import android.view.View
-import android.view.animation.AlphaAnimation
-import android.view.animation.Animation
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.alpha
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -40,8 +35,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private var textCelsius = MutableLiveData<String>()
     var celsius = textCelsius
 
-    private var textFahrenheit = MutableLiveData<String>()
-    var fahrenheit = textFahrenheit
+    var textFahrenheit = MutableLiveData<String>()
 
     private var mImageCelsius = MutableLiveData<Int>()
     var imageCelsius = mImageCelsius
@@ -130,7 +124,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         if (id == R.id.image_fahrenheit) {
 
             celsius.value = "Fahrenheit"
-            fahrenheit.value = "Celsius"
+            textFahrenheit.value = "Celsius"
             mTemperature =
                 ConvertConstants.IMAGEFILTER.FAHRENHEIT
             chooseColor(valueColor)
@@ -139,7 +133,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         } else {
 
             celsius.value = "Celsius"
-            fahrenheit.value = "Fahrenheit"
+            textFahrenheit.value = "Fahrenheit"
             mTemperature =
                 ConvertConstants.IMAGEFILTER.CELSIUS
             chooseColor(valueColor)
@@ -210,10 +204,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 R.color.white
             )
             view.value = ContextCompat.getColor(mMain,
-                R.color.hot
+                R.color.hotLight
             )
             imageFahrenheit.value = ContextCompat.getColor(mMain,
-                R.color.hotLight
+                R.color.hot
             )
         }
     }
