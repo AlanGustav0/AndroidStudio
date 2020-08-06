@@ -67,10 +67,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         mViewModel.edit.observe(this, Observer {
             val edit = edit_celsius.text.toString()
 
-            if (it && temperature.text.toString() == "0º") {
+            if (it && text_temperature.text.toString() == "0º") {
                 mViewModel.calculate(edit)
 
-            } else if (it && temperature.text.toString() != "0º") {
+            } else if (it && text_temperature.text.toString() != "0º") {
                 edit_celsius.setText("")
                 mViewModel.clear()
             } else {
@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         })
 
         mViewModel.temperature.observe(this, Observer {
-            temperature.text = it
+            text_temperature.text = it
         })
 
         mViewModel.button.observe(this, Observer {
