@@ -8,4 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="Gradient">
+        <!-- Customize your theme here. -->
+        <item name="android:background">@drawable/shape_background</item>
+    </style>
+
+
+
 </resources>

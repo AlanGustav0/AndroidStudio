@@ -1,4 +1,4 @@
-package com.alangustavo.conversortemperatura
+package com.alangustavo.conversortemperatura.constants
 
 class ConvertConstants private constructor(){
 
